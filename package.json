@@ -1,7 +1,7 @@
 {
   "name": "pipen-smelte",
   "description": "UI framework pipen reports forked from smelte.",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "dev": "sapper dev -p 7777",
     "build": "rollup -c --config rollup-publish.config.js",
@@ -34,6 +34,7 @@
     "autoprefixer": "^9.5.1",
     "cssnano": "^4.1.10",
     "merge-deep": "^3.0.2",
+    "path-browserify": "^1.0.1",
     "postcss": "^7.0.16",
     "postcss-import": "^12.0.1",
     "postcss-input-range": "^4.0.0",

@@ -1,4 +1,5 @@
 <script>
+  import path from 'path-browserify';
   import { createEventDispatcher } from "svelte";
   import { slide } from "svelte/transition";
   import { ClassBuilder } from "../../utils/classes.js";
@@ -13,12 +14,10 @@
 
   import defaultSort from "./sort.js";
 
-  const classesDefault = "elevation-3 relative text-sm overflow-x-auto dark:bg-dark-500";
-
-
-
+  const classesDefault = "elevation-2 relative text-sm overflow-x-auto dark:bg-dark-500";
 
   export let data = [];
+  export let datafile = "";
   export let columns = Object.keys(data[0] || {})
     .map(i => ({ label: (i || "").replace("_", " "), field: i }));
 
@@ -29,7 +28,7 @@
   export let asc = false;
   export let loading = false;
   export let hideProgress = false;
-  export let editable = true;
+  export let editable = false;
   export let sortable = true;
   export let pagination = true;
   export let scrollToTop = false;
@@ -59,6 +58,37 @@
       .add(classes, true, classesDefault)
       .add($$props.class)
       .get();
+
+  const download = (href, filename) => {
+    const alink = document.createElement("a");
+    alink.href = href;
+    alink.download = filename;
+    document.body.appendChild(alink);
+    alink.click();
+    document.body.removeChild(alink);
+  };
+
+  const downloadTable = () => {
+    const href = 'data:application/vnd.ms-excel;charset=utf-8,\ufeff'+ encodeURIComponent(function(){
+      const dataTitle = columns.map(col => col.label);
+      const dataMain = [];
+
+      data.forEach(row => {
+        const vals = columns.map(col => `"${row[col.field]}"`);
+
+        dataMain.push(vals.join(','));
+      });
+
+      return dataTitle.join(',') + '\r\n' + dataMain.join('\r\n');
+    }());
+
+    const filename = datafile.length > 0
+      ? path.parse(datafile).name + '.xls'
+      : 'data-subset.xls';
+
+    download(href, filename);
+  }
+
 </script>
 
 <table class={c} bind:this={table}>
@@ -101,7 +131,9 @@
       <Pagination
         bind:page
         bind:perPage
+        on:downloadTable={downloadTable}
         class={paginationClasses}
+        {datafile}
         {perPageOptions}
         {scrollToTop}
         {paginatorProps}

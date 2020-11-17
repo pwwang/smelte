@@ -1,8 +1,10 @@
 <script>
+  import path from 'path-browserify';
   import { ClassBuilder } from "../../utils/classes.js";
   import { createEventDispatcher } from "svelte";
   import Select from "../Select";
   import Button from "../Button";
+  import Tooltip from "../Tooltip";
   import { Spacer } from "../Util";
   import Icon from "../Icon";
 
@@ -24,7 +26,7 @@
 
   export let classes = classesDefault;
 
-
+  export let datafile= "";
   export let perPage = 0;
   export let page = 0;
   export let offset = 0;
@@ -44,12 +46,45 @@
     .add(classes, true, classesDefault)
     .add($$props.class)
     .get();
+
+  const downloadTable = () => {
+    dispatch('downloadTable');
+  }
+
 </script>
 
 <tfoot>
   <tr>
     <td colspan="100%" class="border-none">
       <div class={c}>
+        <Tooltip>
+          <div slot="activator">
+            <Button
+              small
+              flat
+              on:click={downloadTable}
+              class="mx-1"
+              icon="arrow_downward"
+            />
+          </div>
+          Download data in the table
+        </Tooltip>
+        {#if datafile.length > 0}
+        <Tooltip>
+          <div slot="activator">
+            <a href={datafile} target="_blank">
+            <Button
+              small
+              flat
+              class="mx-1"
+              icon="cloud_download"
+              />
+            </a>
+          </div>
+          Right-click and "Save as ..." to download the entire data <br />
+          (Showing only part of the data in the table)
+        </Tooltip>
+        {/if}
         <Spacer />
         <div class="mr-1 py-1">
         Rows per page:

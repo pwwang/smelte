@@ -2,6 +2,7 @@
   import Waypoint from "svelte-waypoint";
   import { fade } from "svelte/transition";
   import Dialog from '../Dialog'
+  import Button from '../Button'
 
   export let alt = "";
   export let width = "";
@@ -43,9 +44,9 @@
 </Waypoint>
 
 <Dialog bind:value={showDialog}>
-  <div class="text-gray-700"><img class={$$props.class} {src} /></div>
+  <div class="text-gray-700"><img class="max-w-screen-lg" style="max-height: 70vh" {alt} {src} /></div>
   <div slot="actions">
-    <Button text small color="secondary" on:click={openInNewWindow}>Open in new window</Button>
-    <Button text small on:click={() => showDialog = false}>Close</Button>
+    <Button text small outlined color="secondary" on:click={openInNewWindow}>Open in new window</Button>
+    <Button text small outlined on:click={() => showDialog = false}>Close</Button>
   </div>
 </Dialog>

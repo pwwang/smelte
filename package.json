@@ -1,7 +1,7 @@
 {
   "name": "pipen-smelte",
   "description": "UI framework pipen reports forked from smelte.",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "scripts": {
     "dev": "sapper dev -p 7777",
     "build": "rollup -c --config rollup-publish.config.js",

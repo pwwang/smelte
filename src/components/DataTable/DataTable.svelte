@@ -14,7 +14,7 @@
 
   import defaultSort from "./sort.js";
 
-  const classesDefault = "elevation-2 relative text-sm overflow-x-auto dark:bg-dark-500";
+  const classesDefault = "elevation-2 relative text-sm overflow-x-auto w-full dark:bg-dark-500";
 
   export let data = [];
   export let datafile = "";

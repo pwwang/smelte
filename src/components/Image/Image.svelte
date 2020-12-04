@@ -1,7 +1,7 @@
 <script>
   import Waypoint from "svelte-waypoint";
   import { fade } from "svelte/transition";
-  import { Dialog } from '../Dialog'
+  import Dialog from '../Dialog'
 
   export let alt = "";
   export let width = "";
